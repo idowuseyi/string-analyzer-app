@@ -203,3 +203,21 @@ README.md    - This file
 - In-memory storage (data resets on restart)
 - Automatic URL decoding handles spaces and special characters
 - All text comparisons are case-insensitive
+
+### How To Deploy Rust on leapcell.io
+
+1. Create a new Rust project or use an existing one.
+2. Ensure your project has a `Cargo.toml` file with the necessary dependencies.
+3. Commit your code to a Git repository.
+4. Log in to your leapcell.io account.
+5. Create a new application and select Rust as the runtime.
+6. Connect your Git repository to the leapcell.io application.
+7. Configure build and start commands:
+   - Build Command: `cargo build --release`
+   - Start Command: `./target/release/your_project_name`
+     specify the port you use in the project or set/create the environment variable on leapcell if you're using the environment variable
+8. Deploy the application and monitor the build logs for any errors.
+   --- a/file:///home/oluwaseyi/dev247/rust/string-analyzer-app/src/main.rs
+   +++ b/file:///home/oluwaseyi/dev247/rust/string-analyzer-app/src
+
+use the given link under the domain to access your app or add your domain name.
