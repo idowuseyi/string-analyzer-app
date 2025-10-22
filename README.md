@@ -171,7 +171,7 @@ The project uses the following main dependencies (see `Cargo.toml` for full list
 ### Analyze a string
 
 ```bash
-curl -X POST http://localhost:3000/strings \
+curl -X POST http://localhost:8080/strings \
   -H "Content-Type: application/json" \
   -d '{"value": "hello world"}'
 ```
