@@ -18,12 +18,14 @@ A RESTful API service built with Rust and Axum that analyzes strings and stores 
 ## Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd string-analyzer-app
 ```
 
 2. Install dependencies:
+
 ```bash
 cargo build
 ```
@@ -31,13 +33,17 @@ cargo build
 ## Running Locally
 
 1. Build and run the application:
+
 ```bash
 cargo run
 ```
 
 The server will start on `http://localhost:3000`
 
+Deployed Link: https://string-analyzer-app-idowuseyi5141-r5fzwkr0.leapcell.dev/
+
 For production release:
+
 ```bash
 cargo build --release
 ./target/release/string-analyzer-app
@@ -46,9 +52,11 @@ cargo build --release
 ## API Endpoints
 
 ### Create/Analyze String
+
 **POST** `/strings`
 
 Request:
+
 ```json
 {
   "value": "string to analyze"
@@ -56,6 +64,7 @@ Request:
 ```
 
 Success Response (201 Created):
+
 ```json
 {
   "id": "sha256_hash_value",
@@ -79,14 +88,17 @@ Success Response (201 Created):
 Error: 409 Conflict if string exists, 400 Bad Request if invalid
 
 ### Get Specific String
+
 **GET** `/strings/{string_value}`
 
 Returns: String data or 404 Not Found
 
 ### Get All Strings with Filtering
+
 **GET** `/strings`
 
 Query Parameters:
+
 - `is_palindrome`: boolean (true/false)
 - `min_length`: integer
 - `max_length`: integer
@@ -94,38 +106,51 @@ Query Parameters:
 - `contains_character`: single character
 
 Response:
+
 ```json
 {
-  "data": [/* array of strings */],
+  "data": [
+    /* array of strings */
+  ],
   "count": 15,
-  "filters_applied": { /* applied filters */ }
+  "filters_applied": {
+    /* applied filters */
+  }
 }
 ```
 
 ### Natural Language Filtering
+
 **GET** `/strings/filter-by-natural-language`
 
 Query parameter: `query` (URL encoded natural language query)
 
 Examples:
+
 - `query=all%20single%20word%20palindromic%20strings`
 - `query=strings%20longer%20than%2010%20characters`
 - `query=palindromic%20strings%20that%20contain%20the%20first%20vowel`
 - `query=strings%20containing%20the%20letter%20z`
 
 Response:
+
 ```json
 {
-  "data": [/* matching strings */],
+  "data": [
+    /* matching strings */
+  ],
   "count": 3,
   "interpreted_query": {
     "original": "query text",
-    "parsed_filters": { /* filters */ }
+    "parsed_filters": {
+      /* filters */
+    }
   }
 }
 ```
 
 ### Delete String
+
 **DELETE** `/strings/{string_value}`
 
 Success: 204 No Content, Error: 404 Not Found
@@ -144,6 +169,7 @@ The project uses the following main dependencies (see `Cargo.toml` for full list
 ## Usage Examples
 
 ### Analyze a string
+
 ```bash
 curl -X POST http://localhost:3000/strings \
   -H "Content-Type: application/json" \
@@ -151,11 +177,13 @@ curl -X POST http://localhost:3000/strings \
 ```
 
 ### Get palindromes
+
 ```bash
 curl "http://localhost:3000/strings?is_palindrome=true"
 ```
 
 ### Natural language query
+
 ```bash
 curl "http://localhost:3000/strings/filter-by-natural-language?query=all%20single%20word%20palindromic%20strings"
 ```
