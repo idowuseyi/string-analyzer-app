@@ -11,6 +11,8 @@ use sha2::{Digest, Sha256};
 use std::collections::HashMap;
 use std::sync::Arc;
 use tokio::sync::Mutex;
+use std::env;
+use std::net::SocketAddr;
 
 #[derive(Serialize, Deserialize, Clone)]
 pub struct StringProperties {
@@ -314,9 +316,16 @@ async fn delete_string(
 
 #[tokio::main]
 async fn main() {
+
+    // Get port from env, default to 8080
+    let port = env::var("PORT").unwrap_or_else(|_| "8080".to_string());
+    let addr = format!("0.0.0.0:{}", port).parse::<SocketAddr>().unwrap();
+
     let state: AppState = Arc::new(Mutex::new(HashMap::new()));
 
     let app = Router::new()
+        .route("/", get(|| async { "Hello, World!" }))
+        .route("/kaithhealth", get(|| async { "OK" }))
         .route("/strings", post(create_string))
         .route("/strings/:value", get(get_string))
         .route("/strings", get(get_all_strings))
@@ -324,7 +333,7 @@ async fn main() {
         .route("/strings/:value", delete(delete_string))
         .with_state(state);
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:30001").await.unwrap();
-    println!("Server running on http://localhost:30001");
+    let listener = tokio::net::TcpListener::bind(&addr).await.unwrap();
+    println!("Server running on http://localhost:8080");
     axum::serve(listener, app).await.unwrap();
 }
